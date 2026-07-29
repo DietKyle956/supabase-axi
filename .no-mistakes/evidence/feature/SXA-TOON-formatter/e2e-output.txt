@@ -1,0 +1,157 @@
+
+============================================================
+  TOON Encoder - Object Serialization
+============================================================
+
+>>> Simple object:
+id: 123
+name: Ada
+active: true
+  PASS  simple object
+
+>>> Nested object:
+user:
+  id: 123
+  name: Ada
+  PASS  nested object
+
+>>> Inline primitive array:
+tags[3]: admin,ops,dev
+  PASS  inline array
+
+>>> Tabular array (uniform objects):
+items[2]{sku,qty,price}:
+  A1,2,9.99
+  B2,1,14.5
+  PASS  tabular array
+
+>>> Tabular with nested field groups:
+orders[2]{id,customer{name,country},total}:
+  1,Ada,DK,99
+  2,Bob,UK,149
+  PASS  tabular nested
+
+>>> Keyed tabular form:
+users[2:]{age,city}:
+  alice: 30,Berlin
+  bob: 25,Oslo
+  PASS  keyed tabular
+
+>>> String escaping and quoting:
+msg: "line1\nline2"
+  PASS  string escape
+
+>>> Custom delimiter (pipe):
+tags[3|]: reading|gaming|coding
+  PASS  pipe delimiter
+
+>>> Custom indentation:
+a:
+    b: 1
+  PASS  custom indent
+
+>>> Root array:
+[3]: 1,2,3
+  PASS  root array
+
+>>> List form (non-uniform objects):
+items[2]:
+  - id: 1
+    name: First
+  - id: 2
+    name: Second
+    extra: true
+
+============================================================
+  Content Truncation
+============================================================
+
+>>> Under limit (no truncation):
+{"truncated":"short message","isTruncated":false,"originalLength":13}
+  PASS  under limit
+
+>>> Over limit (truncated):
+{"truncated":"This is a very long ","isTruncated":true,"originalLength":67}
+  PASS  over limit
+  PASS  preserves length
+
+>>> Truncation help hint:
+... (truncated, 1024 chars total)
+help[1]: Run `tasks view 42 --full` to see complete content
+  PASS  has --full hint
+  PASS  has total chars
+
+============================================================
+  Error Formatting
+============================================================
+
+>>> Usage error (exit code 2):
+error: --title is required
+help: tasks create --title "..."
+  PASS  usage error prefix
+  PASS  usage exit code
+
+>>> Runtime error (exit code 1):
+error: API returned 500
+  PASS  runtime exit code
+
+>>> No-op (exit code 0):
+#42 already closed (no-op)
+  PASS  no-op no prefix
+
+>>> Unknown error wrapping:
+error: connection refused
+  PASS  unknown error wrap
+
+============================================================
+  Help Text Generation
+============================================================
+
+>>> Full help output:
+tasks list - List tasks in the current project
+
+Flags:
+  --state (string)  Filter by state (open, closed)
+  --assignee (string)  Filter by assignee
+  --limit (number)  Maximum results  default: 30
+  --full (boolean)  Show complete output without truncation
+
+Examples:
+  $ tasks list
+  $ tasks list --state open --assignee "@me"
+  $ tasks list --limit 50
+  PASS  has command name
+  PASS  has Flags section
+  PASS  has Examples
+  PASS  has defaults
+
+>>> Unknown flag error:
+error: unknown flag --bogus for tasks list
+help: valid flags for tasks list: --state, --assignee, --limit (--help always allowed)
+  PASS  flag error
+  PASS  shows valid flags
+
+>>> Renamed flag error:
+error: --status was renamed; use --state instead for tasks list
+  PASS  renamed hint
+
+============================================================
+  Integration: Task List Output Pipeline
+============================================================
+
+>>> 1. Encode response as TOON:
+tasks[3]{id,title,state,assignee}:
+  1,Fix login bug,open,alice
+  2,Add dark mode,open,bob
+  3,Update docs,closed,alice
+
+>>> 2. Truncate if too long:
+isTruncated: false, originalLength: 119
+
+>>> 3. Error formatting for unknown flag:
+error: unknown flag --statuz for tasks list
+help: valid flags for tasks list: --state, --assignee, --limit (--help always allowed)
+
+============================================================
+  Results: 27 passed, 0 failed
+============================================================
