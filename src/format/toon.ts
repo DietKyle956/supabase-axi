@@ -256,9 +256,11 @@ function serializeListItem(
         // Non-inline, non-tabular array - header on hyphen line
         const header = `${encodeKey(firstKey)}[${firstVal.length}]:`;
         lines.push(`${itemPad}- ${header}`);
+        const subItemPad = " ".repeat((depth + 2) * indent);
+        const subInnerPad = " ".repeat((depth + 3) * indent);
         for (const sub of firstVal) {
           lines.push(
-            ...serializeListItem(sub, depth + 2, indent, delim, innerPad, innerPad + "  "),
+            ...serializeListItem(sub, depth + 2, indent, delim, subItemPad, subInnerPad),
           );
         }
       }
