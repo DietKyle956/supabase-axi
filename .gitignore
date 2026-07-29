@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.supabase.env
+*.log
+.DS_Store
+coverage/
+.lavish/

@@ -1,0 +1,44 @@
+{
+  "name": "@dietkyle/supabase-axi",
+  "version": "0.1.0",
+  "description": "AXI-compliant CLI wrapper around the Supabase API for AI coding agents",
+  "type": "module",
+  "bin": {
+    "supabase-axi": "./dist/cli.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/cli.ts",
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "supabase",
+    "axi",
+    "cli",
+    "ai",
+    "agent",
+    "toon"
+  ],
+  "license": "MIT",
+  "author": "DietKyle",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DietKyle956/supabase-axi"
+  },
+  "engines": {
+    "node": ">=26.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
