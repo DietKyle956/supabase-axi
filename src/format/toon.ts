@@ -215,7 +215,7 @@ function serializeListItem(
     const lines: string[] = [`${itemPad}- ${header}`];
     for (const sub of item) {
       lines.push(
-        ...serializeListItem(sub, depth + 1, indent, delim, innerPad, innerPad + "  "),
+        ...serializeListItem(sub, depth + 1, indent, delim, innerPad, innerPad + " ".repeat(indent)),
       );
     }
     return lines;
