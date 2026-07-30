@@ -1,0 +1,13 @@
+supabase-axi - AXI-compliant Supabase API CLI
+
+Commands:
+  init           Configure supabase-axi with Supabase project credentials
+  tables         List database tables
+  migrations     List and apply migrations
+  sql            Execute SQL queries
+  branches       Manage Supabase branches
+  logs           Retrieve service logs
+  docs           Search Supabase documentation
+  hooks          Manage Claude Code session hooks
+
+Run `supabase-axi <command> --help` for command-specific help.
