@@ -248,7 +248,6 @@ function validateFlags(
 ): CommandResult | null {
   const knownNames = new Set([
     ...(cmd.flags ?? []).map((f) => f.name),
-    ...GLOBAL_FLAGS,
     ...HELP_FLAGS,
   ]);
 

@@ -24,7 +24,7 @@ export function homeView(commands: CommandDef[]): {
   const lines: string[] = [];
 
   // Tool identity (AXI §10: bin path and description)
-  lines.push(`bin: ${collapseHome(process.execPath)}`);
+  lines.push(`bin: ${collapseHome(process.argv[1]!)}`);
   lines.push(
     "description: AXI-compliant CLI wrapper around the Supabase API for AI coding agents",
   );

@@ -21,7 +21,7 @@ import type { ResolvedConfig, ConfigSource } from "../config/types.js";
 import { resolveConfig } from "../config/resolve.js";
 import { toon } from "../format/toon.js";
 import { usageError, runtimeError, noopError, formatError } from "../format/error.js";
-import { formatHelp, type HelpSection, type FlagDef } from "../format/help.js";
+import type { FlagDef } from "../format/help.js";
 import type { CommandDef } from "../router.js";
 
 // ── Types ──────────────────────────────────────────────────────────────
@@ -189,20 +189,6 @@ export async function initCommand(options: InitOptions): Promise<{
   ];
 
   return { exitCode: 0, output: summaryLines.join("\n") };
-}
-
-// ── Built-in help ──────────────────────────────────────────────────────
-
-export function initHelp(): string {
-  const section: HelpSection = {
-    command: "supabase-axi init",
-    description:
-      "Configure supabase-axi with your Supabase project credentials. Auto-discovers from local Supabase CLI config and OS keychain.",
-    flags: INIT_FLAGS,
-    examples: INIT_EXAMPLES,
-  };
-
-  return formatHelp(section);
 }
 
 // ── Validation ─────────────────────────────────────────────────────────
