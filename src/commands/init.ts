@@ -21,7 +21,8 @@ import type { ResolvedConfig, ConfigSource } from "../config/types.js";
 import { resolveConfig } from "../config/resolve.js";
 import { toon } from "../format/toon.js";
 import { usageError, runtimeError, noopError, formatError } from "../format/error.js";
-import { formatHelp, type HelpSection, type FlagDef } from "../format/help.js";
+import type { FlagDef } from "../format/help.js";
+import type { CommandDef } from "../router.js";
 
 // ── Types ──────────────────────────────────────────────────────────────
 
@@ -41,6 +42,70 @@ export interface InitOptions {
   /** Path to read supabase/config.toml from (for auto-discovery). */
   configPath?: string;
 }
+
+// ── Shared flag definitions ────────────────────────────────────────────
+
+const INIT_FLAGS: FlagDef[] = [
+  {
+    name: "--non-interactive",
+    type: "boolean",
+    description: "Run without prompts. Requires all values via flags or discovery.",
+  },
+  {
+    name: "--project-ref",
+    type: "string",
+    description: "Supabase project reference ID.",
+  },
+  {
+    name: "--access-token",
+    type: "string",
+    description: "Supabase personal access token (sbp_...).",
+  },
+  {
+    name: "--service-role-key",
+    type: "string",
+    description: "Supabase service role key (optional admin access).",
+  },
+  {
+    name: "--force",
+    type: "boolean",
+    description: "Overwrite existing .supabase.env.",
+  },
+];
+
+const INIT_EXAMPLES: string[] = [
+  "supabase-axi init",
+  "supabase-axi init --non-interactive --project-ref abcdef --access-token sbp_xxx",
+  "supabase-axi init --force",
+];
+
+// ── CommandDef ──────────────────────────────────────────────────────────
+
+export const initCommandDef: CommandDef = {
+  name: "init",
+  description: "Configure supabase-axi with Supabase project credentials",
+  flags: INIT_FLAGS,
+  examples: INIT_EXAMPLES,
+  handler: async (args) => {
+    const options: InitOptions = {
+      nonInteractive: args.flags["nonInteractive"] === true,
+      projectRef:
+        typeof args.flags["projectRef"] === "string"
+          ? args.flags["projectRef"]
+          : undefined,
+      accessToken:
+        typeof args.flags["accessToken"] === "string"
+          ? args.flags["accessToken"]
+          : undefined,
+      serviceRoleKey:
+        typeof args.flags["serviceRoleKey"] === "string"
+          ? args.flags["serviceRoleKey"]
+          : undefined,
+      force: args.flags["force"] === true,
+    };
+    return initCommand(options);
+  },
+};
 
 // ── Public API ─────────────────────────────────────────────────────────
 
@@ -124,52 +189,6 @@ export async function initCommand(options: InitOptions): Promise<{
   ];
 
   return { exitCode: 0, output: summaryLines.join("\n") };
-}
-
-// ── Built-in help ──────────────────────────────────────────────────────
-
-export function initHelp(): string {
-  const flags: FlagDef[] = [
-    {
-      name: "--non-interactive",
-      type: "boolean",
-      description: "Run without prompts. Requires all values via flags or discovery.",
-    },
-    {
-      name: "--project-ref",
-      type: "string",
-      description: "Supabase project reference ID.",
-    },
-    {
-      name: "--access-token",
-      type: "string",
-      description: "Supabase personal access token (sbp_...).",
-    },
-    {
-      name: "--service-role-key",
-      type: "string",
-      description: "Supabase service role key (optional admin access).",
-    },
-    {
-      name: "--force",
-      type: "boolean",
-      description: "Overwrite existing .supabase.env.",
-    },
-  ];
-
-  const section: HelpSection = {
-    command: "supabase-axi init",
-    description:
-      "Configure supabase-axi with your Supabase project credentials. Auto-discovers from local Supabase CLI config and OS keychain.",
-    flags,
-    examples: [
-      "supabase-axi init",
-      "supabase-axi init --non-interactive --project-ref abcdef --access-token sbp_xxx",
-      "supabase-axi init --force",
-    ],
-  };
-
-  return formatHelp(section);
 }
 
 // ── Validation ─────────────────────────────────────────────────────────

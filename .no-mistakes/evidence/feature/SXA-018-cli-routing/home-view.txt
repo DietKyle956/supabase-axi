@@ -1,0 +1,16 @@
+bin: ~/.no-mistakes/worktrees/a18e039c0c35/01KYT99ZRTWB642VSEP30M9BBA/dist/cli.js
+description: AXI-compliant CLI wrapper around the Supabase API for AI coding agents
+
+[8]{name,description}:
+  init,Configure supabase-axi with Supabase project credentials
+  tables,List database tables
+  migrations,List and apply migrations
+  sql,Execute SQL queries
+  branches,Manage Supabase branches
+  logs,Retrieve service logs
+  docs,Search Supabase documentation
+  hooks,Manage Claude Code session hooks
+
+help[2]:
+  Run `supabase-axi init` to configure credentials
+  Run `supabase-axi <command> --help` for flag details

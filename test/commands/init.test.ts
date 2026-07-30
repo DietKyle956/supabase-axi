@@ -8,7 +8,6 @@ import {
   validateAccessToken,
   formatConfigSummary,
   generateDotenvContent,
-  initHelp,
   initCommand,
 } from "../../src/commands/init.js";
 
@@ -183,21 +182,6 @@ describe("generateDotenvContent", () => {
     expect(content).toContain("SUPABASE_PROJECT_REF=only-ref");
     expect(content).toContain("# SUPABASE_ACCESS_TOKEN=");
     expect(content).toContain("# SUPABASE_SERVICE_ROLE_KEY=");
-  });
-});
-
-// ── Help text tests ────────────────────────────────────────────────────
-
-describe("initHelp", () => {
-  it("should generate help text with all flags", () => {
-    const help = initHelp();
-    expect(help).toContain("supabase-axi init");
-    expect(help).toContain("--non-interactive");
-    expect(help).toContain("--project-ref");
-    expect(help).toContain("--access-token");
-    expect(help).toContain("--service-role-key");
-    expect(help).toContain("--force");
-    expect(help).toContain("Examples:");
   });
 });
 

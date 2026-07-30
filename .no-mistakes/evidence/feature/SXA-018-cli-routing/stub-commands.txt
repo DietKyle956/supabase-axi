@@ -1,0 +1,7 @@
+supabase-axi tables — coming soon
+supabase-axi migrations — coming soon
+supabase-axi sql — coming soon
+supabase-axi branches — coming soon
+supabase-axi logs — coming soon
+supabase-axi docs — coming soon
+supabase-axi hooks — coming soon

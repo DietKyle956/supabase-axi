@@ -1,0 +1,3 @@
+error: unknown command: bogus
+help: Available commands: init, tables, migrations, sql, branches, logs, docs, hooks. Run `supabase-axi --help` for details.
+EXIT: 2
