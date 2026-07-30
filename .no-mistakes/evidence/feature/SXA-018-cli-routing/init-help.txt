@@ -1,0 +1,13 @@
+supabase-axi init - Configure supabase-axi with Supabase project credentials
+
+Flags:
+  --non-interactive (boolean)  Run without prompts. Requires all values via flags or discovery.
+  --project-ref (string)  Supabase project reference ID.
+  --access-token (string)  Supabase personal access token (sbp_...).
+  --service-role-key (string)  Supabase service role key (optional admin access).
+  --force (boolean)  Overwrite existing .supabase.env.
+
+Examples:
+  $ supabase-axi init
+  $ supabase-axi init --non-interactive --project-ref abcdef --access-token sbp_xxx
+  $ supabase-axi init --force

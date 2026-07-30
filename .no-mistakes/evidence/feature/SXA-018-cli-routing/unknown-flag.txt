@@ -1,0 +1,3 @@
+error: unknown flag --fake-flag for supabase-axi init
+help: valid flags for supabase-axi init: --non-interactive, --project-ref, --access-token, --service-role-key, --force, --help (--help always allowed)
+EXIT: 2
